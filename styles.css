@@ -1,0 +1,26 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;  /* สีเขียว */
+    color: white;  /* ให้ข้อความเป็นสีขาวเพื่อให้ตัดกับพื้นหลัง */
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #45a049;  /* สีเขียวเข้มสำหรับปุ่ม */
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #388e3c;  /* สีเขียวเข้มกว่าเมื่อเอาเมาส์ไปวาง */
+}
+
+input[type="file"] {
+    margin: 10px;
+}

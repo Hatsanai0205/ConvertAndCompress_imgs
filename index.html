@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG/JPG File Conversion and Compression</title>
+    <style>
+        /* CSS สำหรับการจัดการรูปแบบ */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #2f2f2f;  /* สีดำเทา */
+            color: white;  /* ข้อความสีขาว */
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="file"] {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PNG to JPG Converter & JPG Compression</h1>
+    <p>Select a PNG or JPG file, or a ZIP file containing PNG/JPG files to convert and compress them.</p>
+    
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="imageFile">Choose PNG/JPG file:</label>
+        <input type="file" id="imageFile" name="image" accept="image/png, image/jpeg">
+        <br>
+        <label for="zipfile">Or choose a ZIP file:</label>
+        <input type="file" id="zipfile" name="zipfile" accept=".zip">
+        <br>
+        <button type="submit" class="button">Convert and Compress</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            var formData = new FormData();
+            var fileInput = document.getElementById('imageFile').files[0];
+            var zipFileInput = document.getElementById('zipfile').files[0];
+
+            if (fileInput) {
+                formData.append('image', fileInput);
+            }
+            if (zipFileInput) {
+                formData.append('zipfile', zipFileInput);
+            }
+
+            // Send the files to the Flask server for conversion and compression
+            fetch('/convert', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob()) // Receive the ZIP file
+            .then(blob => {
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'converted_and_compressed.zip'; // Set the name of the downloaded ZIP file
+                link.click(); // Trigger the download
+            })
+            .catch(error => console.error('Error:', error)); // If an error occurs
+        });
+    </script>
+</body>
+</html>
